@@ -1,0 +1,30 @@
+
+
+
+Etape 2 :
+Afficher le nom des auteurs
+//child::info_traitements/child::mise_en_forme_par/child::unCreateur
+
+Les paragraphes de dialogue 
+//child::corps/child::paragraphe[@type="dialogue"]
+
+Les phrases en français 
+//child::corps/child::paragraphe/child::phrase[@langue="francais"]
+
+La deuxième phrase de chaque paragraphe 
+//child::corps/child::paragraphe/child::phrase[position()=2]
+
+La dixième phrase du texte (pensez à utiliser les parenthèses) 
+(//child::corps/child::paragraphe/child::phrase)[position()=10]
+(//phrase)[10]
+
+
+Les phrases contenant le mot "mouton" (utilisez la fonction contains() ) 
+(//child::corps/child::paragraphe/child::phrase)[contains(.,"mouton")]
+
+
+Listez les modalités des phrases du texte (sans doublons) 
+//phrase/@modalite[not(.=preceding::modalite/.)] (faux)
+distinct-values(//phrase/@modalite)
+
+  <td width="50%">  <xsl:value-of select="."/>
