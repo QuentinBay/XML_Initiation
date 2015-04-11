@@ -79,6 +79,7 @@
        </div>
   </xsl:template>
 
+
   <!-- Affichage des paragraphes de narration en noir pour le francais et en marron pour le hongrois -->
   <xsl:template match="paragraphe[@type='narration']">
       <p>
@@ -108,8 +109,20 @@
                     <td width="50">
                       <img src="images/{@locuteur}.png"/>
                     </td>
-                    <td>  
-                      <xsl:value-of select="."/> 
+                    <td> 
+                      <!-- Verifier l ajout d un mouton -->
+                      <xsl:choose>
+                        <xsl:when test="contains(.,'mouton')">
+                          <span style="font-size: 24; font-weight: bold;">
+                            <xsl:value-of select="."/> 
+                            <img src="images/moutonDessin.png"/>
+                          </span>
+                        </xsl:when>
+                        <xsl:otherwise>
+                          <xsl:value-of select="."/> 
+                        </xsl:otherwise>
+                      </xsl:choose>  
+                      
                     </td>
                   </tr>
                 </tbody>
@@ -128,7 +141,19 @@
                     </td>
                     <td>
                       <span style="font-style: italic; color: brown;">
-                        <xsl:value-of select="."/>
+                        <!-- Verifier l ajout d un mouton -->
+                        <xsl:choose>
+                          <xsl:when test="contains(.,'bárányt')">
+                            <span style="font-size: 24; font-weight: bold;">
+                              <xsl:value-of select="."/> 
+                              <img src="images/moutonDessin.png"/>
+                            </span>
+                            
+                          </xsl:when>
+                          <xsl:otherwise>
+                            <xsl:value-of select="."/> 
+                          </xsl:otherwise>
+                        </xsl:choose>
                       </span>
                     </td>
                   </tr>
