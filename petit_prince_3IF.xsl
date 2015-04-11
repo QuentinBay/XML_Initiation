@@ -17,7 +17,11 @@
       <body style="background-color:white;">
         <xsl:apply-templates/>
       </body>
+      <!-- Affichage de la fin du texte -->
+      <h3>Fin du texte.</h3>
+      <hr/> <!-- affichage d une ligne horizontale --> 
     </html>
+
   </xsl:template>
 
   <!-- Affichage de l en-tete -->
@@ -86,7 +90,7 @@
           <xsl:for-each select="phrase[@langue='francais']">
              <xsl:value-of select="."/>
           </xsl:for-each>
-
+          <br/>  <!-- Saut a la ligne -->
           <xsl:for-each select="phrase[@langue='hongrois']">
               <span style="color:brown; font-style: italic;">
                     <xsl:value-of select="."/>
@@ -165,7 +169,6 @@
       </tbody>
     </table> 
   </xsl:template>
-
 
 </xsl:stylesheet>
 
