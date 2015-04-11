@@ -12,5 +12,5 @@ XPath request, creation of an XSL document.
 
 Use of BaseX to validate XML documents.
 
-## Third Part : DOM et ajax
+## Third Part : DOM & ajax
 
