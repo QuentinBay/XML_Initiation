@@ -117,7 +117,7 @@
                       <!-- Verifier l ajout d un mouton -->
                       <xsl:choose>
                         <xsl:when test="contains(.,'mouton')">
-                          <span style="font-size: 24; font-weight: bold;">
+                          <span style="font-size: 24px; font-weight: bold;">
                             <xsl:value-of select="."/> 
                             <img src="images/moutonDessin.png"/>
                           </span>
