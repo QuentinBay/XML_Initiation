@@ -1,4 +1,4 @@
-
+TOKO Samuel & BAYART Quentin
 
 
 Etape 2 :
@@ -28,3 +28,105 @@ Listez les modalités des phrases du texte (sans doublons)
 distinct-values(//phrase/@modalite)
 
   <td width="50%">  <xsl:value-of select="."/>
+  
+  Deuxième partie
+  
+ 1) Retournez les phrases en français triés en ordre alphabétique
+ 
+<phrases>{
+for $p in //phrase
+order by $p
+where $p/@langue = "francais"
+return $p
+}</phrases>
+
+2)Retournez les phrases françaises contenant le mot "mouton" 
+
+<phrases>{
+for $p in //phrase
+order by $p
+where $p/@langue = "francais"
+and contains( $p, 'mouton')
+return $p
+}</phrases>
+
+
+3) Pour chaque paragraphe: donnez son type, le nombre de phrases qui la compose, les modalités de ces phrases (sans répétition) ainsi que les locuteurs. (allez-y étape par étape). Astuce : pour avoir les valeurs uniques des modalités, utilisez la fonction distinct-values 
+
+<resultat>{
+  for $p in //paragraphe
+  return 
+  <paragraphe>
+  <type> 
+    {$p/@type/(concat(name(.),"=",.))} 
+  </type> 
+  <NombrePhrases> 
+    {count($p/phrase)} 
+  </NombrePhrases>
+  <modalites>
+    {distinct-values($p/phrase/@modalite/(concat(name(.),"=",.)))}
+   </modalites>
+  <locuteur> 
+    {distinct-values($p/phrase/@locuteur/(concat(name(.),"=",.)))} 
+  </locuteur>
+  </paragraphe>
+}</resultat>
+
+
+Afficher la version française seulement (respectez la structure en paragraphes) 
+
+<vf>{
+  for $p in //paragraphe
+  return
+  <paragraphe>
+  {data($p/phrase[@langue = "francais"])}
+  </paragraphe>
+}</vf>
+
+
+Afficher uniquement les deuxièmes phrases des paragraphes de la version française //A corriger
+
+<vf>{
+  for $p in //paragraphe
+  where $p/phrase[@langue = "francais"]
+  return
+  <paragraphe>
+  {data($p/phrase[position()=1])}
+  {data($p/phrase[position()=2]) }
+  </paragraphe>
+}</vf>
+
+Afficher seulement les dialogues en français du narrateur 
+
+<vf>{
+      for $phrase in //paragraphe[@type="dialogue"]/phrase
+      where  $phrase/@langue ="francais"
+      and $phrase/@locuteur="Narrateur"
+      return 
+      <phrase>
+      { data($phrase) }
+      </phrase>
+}</vf>
+
+Afficher toutes les phrases du Petit Prince en français qui comporte le mot "mouton" ainsi que le nombre de ces phrases 
+
+<vf nb="{count(//paragraphe[@type='dialogue']/phrase[@langue ='francais' and @locuteur='LePetitPrince' and contains( ., 'mouton')])}">{
+      for $phrase in //paragraphe[@type="dialogue"]/phrase
+      where  $phrase/@langue ="francais"
+      and $phrase/@locuteur="LePetitPrince"
+      and contains( $phrase, 'mouton')
+      return 
+      <phrase>
+      { data($phrase) }
+      </phrase>
+  
+}</vf>
+
+
+///Mettre résultat pour xquery !
+
+
+
+Partie 3:
+
+//MEttre les fonctions javascripts seulement !
