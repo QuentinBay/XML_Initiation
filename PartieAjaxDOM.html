@@ -142,8 +142,6 @@
             // Récupèration du fichier JSON
             var response = getHttpJSON("http://www.omdbapi.com/?t=Workaholics&y=&plot=short&r=json");
 
-            var elementHtmlParent = window.document.getElementById(idElementARemplacer);
-
             // Récupèration de l'élement ul media
             var ulMedia = recupererPremierElementEnfant(elementHtmlParent);
 
@@ -254,7 +252,7 @@
           // Remplacement de l'élément
           elementHtmlParent.replaceChild(elementAInserer,elementHtmlARemplacer);
 
-          var i = 1;
+         /*var i = 1;
 
           while ( newXmlDocument.getElementsByTagName(newElementName)[i].nodeType == 1 ) {
             var elementAInserer = newXmlDocument.getElementsByTagName(newElementName)[i];          
@@ -263,55 +261,51 @@
             elementHtmlParent.appendChild(elementAInserer);
 
             i++;
-          }
-         
-          
+          }*/
         }
 
         /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         // Question 5
         function ajaxButton5() {
-          
           var elementHtmlParent = window.document.getElementById("remplacerCeci");
+
+          // Récupèration de l'élement episode
           var episode = recupererPremierElementEnfant(elementHtmlParent);
 
-          //var noeud = document.getElementById("idChildNodes")
+          // Récupèration de l'élement li / fils
           var fils = episode.childNodes;
+
           var nbFils = fils.length;
-           for(var i = 0; i < nbFils; i++)
+
+          for(var i = 0; i < nbFils; i++)
           {
-            //document.write(fils[i].nodeType +"/"+ fils[i].nodeValue +"<br>");
-              
-              // Récupèration de l'élement à remplacer
-            //var item = recupererPremierElementEnfant(episode);
-            
-            // Chargement du fichier JSON
+
+            // Récupèration du fichier JSON /meme
             var titre = document.getElementsByTagName("h4")[i];
             var text=titre.textContent;
-            var response = getHttpJSON("http://www.omdbapi.com/?t="+text+"&y=&plot=short&r=json");        
-            
+            var response = getHttpJSON("http://www.omdbapi.com/?t="+text+"&y=&plot=short&r=json");  
+
+            // Récupèration de l'élement a à modifier
+            var aOld = recupererPremierElementEnfant(fils[i]);
+
+            // Récupèration de l'élement div à modifier / list
+            var divMediaBody = recupererDernierElementEnfant(fils[i]);
             
             // Creation de l'élément <a> contenant la miniature
             var itemImageLink = document.createElement("a");
             itemImageLink.setAttribute("class", "pull-left thumbnail-size");
-            var lien = window.document.getElementById("link");
-            var textLien=lien.textContent;
-            itemImageLink.setAttribute("href", textLien);
-            fils[i].insertBefore(itemImageLink,fils[i].firstChild);
+            itemImageLink.setAttribute("href", response.URLEpisode12);
+            fils[i].insertBefore(itemImageLink, aOld);
             
-            // Création de l'élément image de la miniature
+            // Création de l'élément image de la miniature /meme
             var itemImage = document.createElement("img");
             itemImage.setAttribute("class", "media-object img-thumbnail responsive");
             itemImage.setAttribute("src", response.Poster);
             itemImageLink.appendChild(itemImage);
-            
-            
-            
-            var list = fils[i].lastChild;
-            
-            // Création de l'élément <div> correspondant aux caractéritiques du programme
+
+            // Création de l'élément <div> correspondant aux caractéritiques du programme /meme
             var moreInfos = document.createElement("div");
-            list.appendChild(moreInfos);
+            divMediaBody.appendChild(moreInfos);
             
             // Création des labels
             var yearLabel = document.createElement("span");
@@ -376,11 +370,11 @@
     	  <input id="myButton2" type="button" value="Bouton 2: Afficher infos sur Workaholics !" onClick="ajaxWorkaholics('./fichiersPourAjax/calendar-short.xml','./fichiersPourAjax/calendar-eventlist-workaholics.xsl','ul');" /><br /> 
         <input id="myButton3" type="button" style= "display:none" value="Bouton 3: Afficher plus d'infos sur Workaholics !" onClick="ajaxButton3('remplacerCeci');" /><br />
         <input id="myButton4" type="button" value="Bouton 4: Afficher les infos complètes du calendrier !" onClick="ajaxButton4('./fichiersPourAjax/calendar-full.xml','./fichiersPourAjax/calendar-eventlist.xsl','ul');" /><br /> 
-        <input id="myButton5" type="button" style= "display:none" value="Bouton 5: Afficher plus de détails !" onClick="ajaxButton5();" /><br /> 
+        <input id="myButton5" type="button" style= "display:none" value="Bouton 5: Afficher plus d'infos sur le calendrier !" onClick="ajaxButton5();" /><br /> 
     </p>
 
     <div id="remplacerCeci">
-        <span style="color: red;"></span>
+         <span style="color: red;">Cet texte va être remplacé par des r&eacute;sultats provenant d'un fichier XML mis en forme par une feuille de style XSLT...</span>
     </div>
 
     <div style="height:150pt;" />
