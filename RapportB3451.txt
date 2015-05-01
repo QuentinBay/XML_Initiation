@@ -1,0 +1,755 @@
+TOKO Samuel & BAYART Quentin - B3451
+DATE DE RENDU : 01/05/2015 14h
+
+//----------------------------------------------------------------------------//
+                  TP - BASES DE DONNEES SEMI-STRUCTUREES
+//----------------------------------------------------------------------------//
+
+
+//----------------------------------------------------------------------------//
+                  PREMIERE PARTIE - XML, DTD, XPATH, XSLT
+//----------------------------------------------------------------------------//
+
+//----------------------------------------------------------------------------//
+                  I - MISE A JOUR DE L'INSTANCE XML DTD
+//----------------------------------------------------------------------------//
+
+Pour que l'instance XML corresponde au fichier DTD, il a fallu rajouter la
+balise <email> </email>.
+
+
+//----------------------------------------------------------------------------//
+                        II - EXPRESSIONS XPATH
+//----------------------------------------------------------------------------//
+
+********************************************************************************
+1) Afficher le nom des auteurs :
+
+//child::info_traitements/child::mise_en_forme_par/child::unCreateur
+
+********************************************************************************
+2) Les paragraphes de dialogue :
+
+//child::corps/child::paragraphe[@type="dialogue"]
+
+********************************************************************************
+3) Les phrases en français :
+
+//child::corps/child::paragraphe/child::phrase[@langue="francais"]
+
+********************************************************************************
+4) La deuxième phrase de chaque paragraphe :
+
+//child::corps/child::paragraphe/child::phrase[position()=2]
+
+********************************************************************************
+5) La dixième phrase du texte :
+
+(//phrase)[10]
+
+********************************************************************************
+6) Les phrases contenant le mot "mouton" :
+
+(//child::corps/child::paragraphe/child::phrase)[contains(.,"mouton")]
+
+********************************************************************************
+7) Listez les modalités des phrases du texte (sans doublons) :
+
+distinct-values(//phrase/@modalite)
+
+
+
+//----------------------------------------------------------------------------//
+                          DEUXIEME PARTIE - XQUERY
+//----------------------------------------------------------------------------//
+
+
+
+********************************************************************************
+1) Retournez les phrases en français triés en ordre alphabétique
+ 
+<phrases>
+{
+  for $p in //phrase
+  order by $p
+  where $p/@langue = "francais"
+  return $p
+}
+</phrases>
+
+RESULTAT :
+
+<phrase locuteur="Narrateur" modalite="declarative" langue="francais">Alors j'ai dessiné.</phrase>
+<phrase locuteur="Narrateur" modalite="declarative" langue="francais">Alors vous imaginez ma surprise, au levé du jour, quand une drôle de petite voix m'a réveillé.</phrase>
+<phrase locuteur="Narrateur" modalite="declarative" langue="francais">Alors, faute de patience, comme j'avais hate de commencer le démontage de mon moteur, je griffonnai ce dessin-ci.</phrase>
+<phrase locuteur="Narrateur" modalite="declarative" langue="francais">Aussi absurde que cela me semblaît à mille milles de tous les endroits habités et en danger de mort, je sortis de ma poche une feuille de papier et un stylographe.</phrase>
+<phrase locuteur="LePetitPrince" modalite="exclamative" langue="francais">C'est tout à fait comme ça que je le voulais!</phrase>
+<phrase locuteur="Narrateur" modalite="declarative" langue="francais">C'était pour moi une question de vie ou de mort. J'avais à peine de l'eau à boire pour huit jours.</phrase>
+<phrase locuteur="Narrateur" modalite="declarative" langue="francais">Ca c'est la caisse.</phrase>
+<phrase locuteur="LePetitPrince" modalite="impérative" langue="francais">Ca ne fait rien. Dessine-moi un mouton.</phrase>
+<phrase locuteur="Narrateur" modalite="declarative" langue="francais">Ca suffira sûrement.</phrase>
+<phrase locuteur="Narrateur" modalite="declarative" langue="francais">Ce n'est pas de ma faute.</phrase>
+<phrase locuteur="Narrateur" modalite="declarative" langue="francais">Celui du boa fermé.</phrase>
+<phrase locuteur="LePetitPrince" modalite="declarative" langue="francais">Celui-là est trop vieux.</phrase>
+<phrase locuteur="LePetitPrince" modalite="declarative" langue="francais">Chez moi c'est tout petit.</phrase>
+<phrase locuteur="Narrateur" modalite="declarative" langue="francais">Comme je n'avais jamais dessiné un mouton je refis, pour lui, un des deux seuls dessins dont j'étais capable.</phrase>
+<phrase locuteur="LePetitPrince" modalite="interrogative" langue="francais">Crois-tu qu'il faille beaucoup d'herbe à ce mouton?</phrase>
+<phrase locuteur="LePetitPrince" modalite="impérative" langue="francais">Dessine-moi un mouton.</phrase>
+<phrase locuteur="LePetitPrince" modalite="declarative" langue="francais">Dessine-moi un mouton...</phrase>
+<phrase locuteur="Narrateur" modalite="declarative" langue="francais">Elle disait:</phrase>
+<phrase locuteur="Narrateur" modalite="declarative" langue="francais">Et c'est ainsi que je fis la connaissance du petit prince.</phrase>
+<phrase locuteur="Narrateur" modalite="declarative" langue="francais">Et il me répéta alors, tout doucement, comme une chose très sérieuse:</phrase>
+<phrase locuteur="Narrateur" modalite="declarative" langue="francais">Et j'ai vu un petit bonhomme tout à fait extraordinaire qui me considérait gravement.</phrase>
+<phrase locuteur="Narrateur" modalite="declarative" langue="francais">Et je fus stupéfait d'entendre le petit bonhomme me répondre:</phrase>
+<phrase locuteur="Narrateur" modalite="declarative" langue="francais">Et je lançai:</phrase>
+<phrase locuteur="LePetitPrince" modalite="impérative" langue="francais">Fais-en un autre.</phrase>
+<phrase locuteur="Narrateur" modalite="exclamative" langue="francais">Hein!</phrase>
+<phrase locuteur="LePetitPrince" modalite="declarative" langue="francais">Il a des cornes...</phrase>
+<phrase locuteur="Narrateur" modalite="declarative" langue="francais">Il me répondit:</phrase>
+<phrase locuteur="Narrateur" modalite="declarative" langue="francais">Il n'avait en rien l'apparence d'un enfant perdu au milieu du désert, à mille milles de toute région habitée. Quand je réussis enfin de parler, je lui dis:</phrase>
+<phrase locuteur="Narrateur" modalite="declarative" langue="francais">Il pencha la tête vers le dessin:</phrase>
+<phrase locuteur="Narrateur" modalite="declarative" langue="francais">Il regarda attentivement, puis:</phrase>
+<phrase locuteur="Narrateur" modalite="declarative" langue="francais">J'ai ainsi vécu seul, sans personne avec qui parler véritablement, jusqu'à une panne dans le désert du Sahara, il y a six ans.</phrase>
+<phrase locuteur="LePetitPrince" modalite="declarative" langue="francais">J'ai besoin d'un mouton.</phrase>
+<phrase locuteur="Narrateur" modalite="declarative" langue="francais">J'ai bien frotté mes yeux.</phrase>
+<phrase locuteur="Narrateur" modalite="declarative" langue="francais">J'ai bien regardé.</phrase>
+<phrase locuteur="Narrateur" modalite="declarative" langue="francais">J'ai sauté sur mes pieds comme si j'avais été frappé par la foudre.</phrase>
+<phrase locuteur="Narrateur" modalite="declarative" langue="francais">J'avais été découragé dans ma carrière de peintre par les grandes personnes, à l'age de six ans, et je n'avais rien appris à dessiner, sauf les boas fermés et les boas ouverts.</phrase>
+<phrase locuteur="Narrateur" modalite="declarative" langue="francais">J'étais bien plus isolé qu'un naufragé sur un rideau au milieu de l'océan.</phrase>
+<phrase locuteur="Narrateur" modalite="declarative" langue="francais">Je dessinai:</phrase>
+<phrase locuteur="Narrateur" modalite="declarative" langue="francais">Je refis donc encore mon dessin:</phrase>
+<phrase locuteur="Narrateur" modalite="declarative" langue="francais">Je regardai donc cette apparition avec des yeux tout ronds d'étonnement.</phrase>
+<phrase locuteur="Narrateur" modalite="declarative" langue="francais">Je t'ai donné un tout petit mouton.</phrase>
+<phrase locuteur="LePetitPrince" modalite="declarative" langue="francais">Je veux un mouton qui vive longtemps.</phrase>
+<phrase locuteur="Narrateur" modalite="declarative" langue="francais">Le mouton que tu veux est dedans.</phrase>
+<phrase locuteur="Narrateur" modalite="declarative" langue="francais">Le premier soir je me suis donc endormi sur le sable à mille milles de toute terre habitée.</phrase>
+<phrase locuteur="Narrateur" modalite="declarative" langue="francais">Mais il fut refusé, comme les précédents:</phrase>
+<phrase locuteur="Narrateur" modalite="declarative" langue="francais">Mais je fus bien surpris de voir s'illuminer le visage de mon jeune juge:</phrase>
+<phrase locuteur="Narrateur" modalite="declarative" langue="francais">Mais je me rappelai alors que j'avais surtout étudié la géographie, l'histoire, le calcul et la grammaire et je dis au petit bonhomme (avec un peu de mauvaise humeur) que je ne savais pas dessiner.</phrase>
+<phrase locuteur="Narrateur" modalite="declarative" langue="francais">Mais mon dessin,bien sùr, est beaucoup moins ravissant que le modèle.</phrase>
+<phrase locuteur="Narrateur" modalite="interrogative" langue="francais">Mais qu'est-ce que tu fais là?</phrase>
+<phrase locuteur="Narrateur" modalite="declarative" langue="francais">Mon ami sourit gentiment, avec indulgence:</phrase>
+<phrase locuteur="Narrateur" modalite="declarative" langue="francais">N'oubliez pas que je me trouvais à mille milles de toute région habitée.</phrase>
+<phrase locuteur="LePetitPrince" modalite="exclamative" langue="francais">Non! Celui-là est déjà très malade.</phrase>
+<phrase locuteur="LePetitPrince" modalite="declarative" langue="francais">Non! Non! Je ne veux pas d'un éléphant dans un boa.</phrase>
+<phrase locuteur="Narrateur" modalite="declarative" langue="francais">Or mon petit bonhomme ne me semblait ni égaré, ni mort de fatigue, ni mort de faim, ni mort de soif, ni mort de peur.</phrase>
+<phrase locuteur="LePetitPrince" modalite="declarative" langue="francais">Parce que chez moi c'est tout petit...</phrase>
+<phrase locuteur="LePetitPrince" modalite="declarative" langue="francais">Pas si petit que ça...</phrase>
+<phrase locuteur="Narrateur" modalite="interrogative" langue="francais">Pourquoi?</phrase>
+<phrase locuteur="Narrateur" modalite="declarative" langue="francais">Quand le mystère est trop impressionnant, on n'ose pas désobéir.</phrase>
+<phrase locuteur="Narrateur" modalite="declarative" langue="francais">Quelque chose s'était cassé dans mon moteur, et comme je n'avais avec moi ni mécanicien, ni passagers, je me préparai à essayer de réussir, tout seul, une réparation difficile.</phrase>
+<phrase locuteur="LePetitPrince" modalite="declarative" langue="francais">S'il vous plaît... dessine-moi un mouton!</phrase>
+<phrase locuteur="LePetitPrince" modalite="declarative" langue="francais">S'il vous plaît... dessine-moi un mouton...</phrase>
+<phrase locuteur="LePetitPrince" modalite="declarative" langue="francais">Tiens! Il s'est endormi...</phrase>
+<phrase locuteur="LePetitPrince" modalite="declarative" langue="francais">Tu vois bien... ce n'est pas un mouton, c'est un bélier.</phrase>
+<phrase locuteur="LePetitPrince" modalite="declarative" langue="francais">Un boa c'est très dangereux, et un éléphant c'est très encombrant.</phrase>
+<phrase locuteur="Narrateur" modalite="declarative" langue="francais">Voilà le meilleur portrait que, plus tard, j'ai réussi à faire de lui.</phrase>
+
+
+********************************************************************************
+2)Retournez les phrases françaises contenant le mot "mouton" 
+
+<phrases>
+{
+  for $p in //phrase
+  order by $p
+  where $p/@langue = "francais"
+        and contains( $p, 'mouton')
+  return $p
+}
+</phrases>
+
+RESULTAT :
+
+<phrase locuteur="LePetitPrince" modalite="declarative" langue="francais">S'il vous plaît... dessine-moi un mouton!</phrase>
+<phrase locuteur="LePetitPrince" modalite="declarative" langue="francais">Dessine-moi un mouton...</phrase>
+<phrase locuteur="LePetitPrince" modalite="declarative" langue="francais">S'il vous plaît... dessine-moi un mouton...</phrase>
+<phrase locuteur="LePetitPrince" modalite="impérative" langue="francais">Ca ne fait rien. Dessine-moi un mouton.</phrase>
+<phrase locuteur="Narrateur" modalite="declarative" langue="francais">Comme je n'avais jamais dessiné un mouton je refis, pour lui, un des deux seuls dessins dont j'étais capable.</phrase>
+<phrase locuteur="LePetitPrince" modalite="declarative" langue="francais">J'ai besoin d'un mouton.</phrase>
+<phrase locuteur="LePetitPrince" modalite="impérative" langue="francais">Dessine-moi un mouton.</phrase>
+<phrase locuteur="LePetitPrince" modalite="declarative" langue="francais">Tu vois bien... ce n'est pas un mouton, c'est un bélier.</phrase>
+<phrase locuteur="LePetitPrince" modalite="declarative" langue="francais">Je veux un mouton qui vive longtemps.</phrase>
+<phrase locuteur="Narrateur" modalite="declarative" langue="francais">Le mouton que tu veux est dedans.</phrase>
+<phrase locuteur="LePetitPrince" modalite="interrogative" langue="francais">Crois-tu qu'il faille beaucoup d'herbe à ce mouton?</phrase>
+<phrase locuteur="Narrateur" modalite="declarative" langue="francais">Je t'ai donné un tout petit mouton.</phrase>
+
+
+********************************************************************************
+3) Pour chaque paragraphe: donnez son type, le nombre de phrases qui la compose, 
+les modalités de ces phrases (sans répétition) ainsi que les locuteurs :
+
+<resultat>
+{
+  for $p in //paragraphe
+  return 
+    <paragraphe>
+      <type> 
+        {$p/@type/(concat(name(.),"=",.))} 
+      </type> 
+      <NombrePhrases> 
+        {count($p/phrase)} 
+      </NombrePhrases>
+      <modalites>
+        {distinct-values($p/phrase/@modalite/(concat(name(.),"=",.)))}
+       </modalites>
+      <locuteur> 
+        {distinct-values($p/phrase/@locuteur/(concat(name(.),"=",.)))} 
+      </locuteur>
+    </paragraphe>
+}
+</resultat>
+
+RESULTAT :
+
+type="narration"
+7
+declarative
+locuteur="Narrateur"
+type="narration"
+7
+declarative
+locuteur="Narrateur"
+type="dialogue"
+6
+declarative
+exclamative
+locuteur="LePetitPrince"
+locuteur="Narrateur"
+type="narration"
+13
+declarative
+locuteur="Narrateur"
+type="narration"
+9
+declarative
+locuteur="Narrateur"
+type="dialogue"
+2
+interrogative
+locuteur="Narrateur"
+type="narration"
+2
+declarative
+locuteur="Narrateur"
+type="dialogue"
+2
+declarative
+locuteur="LePetitPrince"
+type="narration"
+7
+declarative
+locuteur="Narrateur"
+type="dialogue"
+2
+impérative
+locuteur="LePetitPrince"
+type="narration"
+5
+declarative
+locuteur="Narrateur"
+type="dialogue"
+10
+declarative
+impérative
+locuteur="LePetitPrince"
+type="narration"
+4
+declarative
+locuteur="Narrateur"
+type="dialogue"
+4
+exclamative
+impérative
+locuteur="LePetitPrince"
+type="narration"
+4
+declarative
+locuteur="Narrateur"
+type="dialogue"
+4
+declarative
+locuteur="LePetitPrince"
+type="narration"
+4
+declarative
+locuteur="Narrateur"
+type="dialogue"
+4
+declarative
+locuteur="LePetitPrince"
+type="narration"
+3
+declarative
+locuteur="Narrateur"
+type="dialogue"
+4
+declarative
+locuteur="Narrateur"
+type="narration"
+2
+declarative
+locuteur="Narrateur"
+type="dialogue"
+12
+exclamative
+interrogative
+declarative
+locuteur="LePetitPrince"
+locuteur="Narrateur"
+type="narration"
+2
+declarative
+locuteur="Narrateur"
+type="dialogue"
+4
+declarative
+locuteur="LePetitPrince"
+type="narration"
+2
+declarative
+locuteur="Narrateur"
+
+
+********************************************************************************
+4) Afficher la version française seulement (respectez la structure en paragraphes) 
+
+<vf>{
+  for $p in //paragraphe
+  return
+  <paragraphe>
+  {data($p/phrase[@langue = "francais"])}
+  </paragraphe>
+}</vf>
+
+RESULTAT :
+
+
+J'ai ainsi vécu seul, sans personne avec qui parler véritablement, jusqu'à une panne dans le désert du Sahara, il y a six ans.
+Quelque chose s'était cassé dans mon moteur, et comme je n'avais avec moi ni mécanicien, ni passagers, je me préparai à essayer de réussir, tout seul, une réparation difficile. 
+C'était pour moi une question de vie ou de mort. J'avais à peine de l'eau à boire pour huit jours. 
+Le premier soir je me suis donc endormi sur le sable à mille milles de toute terre habitée. 
+ J'étais bien plus isolé qu'un naufragé sur un rideau au milieu de l'océan. 
+ Alors vous imaginez ma surprise, au levé du jour, quand une drôle de petite voix m'a réveillé. 
+ Elle disait: 
+ S'il vous plaît... dessine-moi un mouton! 
+ Hein! 
+ Dessine-moi un mouton... 
+ J'ai sauté sur mes pieds comme si j'avais été frappé par la foudre. 
+ J'ai bien frotté mes yeux. 
+ J'ai bien regardé. 
+ Et j'ai vu un petit bonhomme tout à fait extraordinaire qui me considérait gravement. 
+ Voilà le meilleur portrait que, plus tard, j'ai réussi à faire de lui. 
+ Mais mon dessin,bien sùr, est beaucoup moins ravissant que le modèle. 
+ Ce n'est pas de ma faute. 
+ J'avais été découragé dans ma carrière de peintre par les grandes personnes, à l'age de six ans, et je n'avais rien appris à dessiner, sauf les boas fermés et les boas ouverts. 
+ Je regardai donc cette apparition avec des yeux tout ronds d'étonnement. 
+ N'oubliez pas que je me trouvais à mille milles de toute région habitée. 
+ Or mon petit bonhomme ne me semblait ni égaré, ni mort de fatigue, ni mort de faim, ni mort de soif, ni mort de peur. 
+ Il n'avait en rien l'apparence d'un enfant perdu au milieu du désert, à mille milles de toute région habitée. Quand je réussis enfin de parler, je lui dis: 
+ Mais qu'est-ce que tu fais là? 
+ Et il me répéta alors, tout doucement, comme une chose très sérieuse: 
+ S'il vous plaît... dessine-moi un mouton... 
+ Quand le mystère est trop impressionnant, on n'ose pas désobéir. 
+ Aussi absurde que cela me semblaît à mille milles de tous les endroits habités et en danger de mort, je sortis de ma poche une feuille de papier et un stylographe. 
+ Mais je me rappelai alors que j'avais surtout étudié la géographie, l'histoire, le calcul et la grammaire et je dis au petit bonhomme (avec un peu de mauvaise humeur) que je ne savais pas dessiner. 
+ Il me répondit: 
+ Ca ne fait rien. Dessine-moi un mouton. 
+ Comme je n'avais jamais dessiné un mouton je refis, pour lui, un des deux seuls dessins dont j'étais capable. 
+ Celui du boa fermé. 
+ Et je fus stupéfait d'entendre le petit bonhomme me répondre: 
+ Non! Non! Je ne veux pas d'un éléphant dans un boa. 
+ Un boa c'est très dangereux, et un éléphant c'est très encombrant. 
+ Chez moi c'est tout petit. 
+ J'ai besoin d'un mouton. 
+ Dessine-moi un mouton. 
+ Alors j'ai dessiné. 
+ Il regarda attentivement, puis: 
+ Non! Celui-là est déjà très malade. 
+ Fais-en un autre. 
+ Je dessinai: 
+ Mon ami sourit gentiment, avec indulgence: 
+ Tu vois bien... ce n'est pas un mouton, c'est un bélier. 
+ Il a des cornes... 
+ Je refis donc encore mon dessin: 
+ Mais il fut refusé, comme les précédents: 
+ Celui-là est trop vieux. 
+ Je veux un mouton qui vive longtemps. 
+ Alors, faute de patience, comme j'avais hate de commencer le démontage de mon moteur, je griffonnai ce dessin-ci. 
+ Et je lançai: 
+ Ca c'est la caisse. 
+ Le mouton que tu veux est dedans. 
+ Mais je fus bien surpris de voir s'illuminer le visage de mon jeune juge: 
+ C'est tout à fait comme ça que je le voulais! 
+ Crois-tu qu'il faille beaucoup d'herbe à ce mouton? 
+ Pourquoi? 
+ Parce que chez moi c'est tout petit... 
+ Ca suffira sûrement. 
+ Je t'ai donné un tout petit mouton. 
+ Il pencha la tête vers le dessin: 
+ Pas si petit que ça... 
+ Tiens! Il s'est endormi... 
+ Et c'est ainsi que je fis la connaissance du petit prince.
+
+
+
+********************************************************************************
+5) Afficher uniquement les deuxièmes phrases des paragraphes de la version 
+française :
+
+<vf>{
+  for $p in //paragraphe
+  where $p/phrase[@langue = "francais"]
+  return
+    <paragraphe>
+      {data($p/phrase[position()=1])}
+      {data($p/phrase[position()=2]) }
+    </paragraphe>
+}</vf>
+
+RESULTAT :
+
+
+Quelque chose s'était cassé dans mon moteur, et comme je n'avais avec moi ni mécanicien, ni passagers, je me préparai à essayer de réussir, tout seul, une réparation difficile.
+J'étais bien plus isolé qu'un naufragé sur un rideau au milieu de l'océan.
+Hein!
+J'ai bien frotté mes yeux.
+N'oubliez pas que je me trouvais à mille milles de toute région habitée.
+Aussi absurde que cela me semblaît à mille milles de tous les endroits habités et en danger de mort, je sortis de ma poche une feuille de papier et un stylographe.
+Celui du boa fermé.
+Un boa c'est très dangereux, et un éléphant c'est très encombrant.
+Il regarda attentivement, puis:
+Fais-en un autre.
+Mon ami sourit gentiment, avec indulgence:
+Il a des cornes...
+Mais il fut refusé, comme les précédents:
+Je veux un mouton qui vive longtemps.
+Et je lançai:
+Le mouton que tu veux est dedans.
+Crois-tu qu'il faille beaucoup d'herbe à ce mouton?
+Tiens! Il s'est endormi...
+
+
+********************************************************************************
+6) Afficher seulement les dialogues en français du narrateur :
+
+<vf>{
+      for $phrase in //paragraphe[@type="dialogue"]/phrase
+      where  $phrase/@langue ="francais"
+      and $phrase/@locuteur="Narrateur"
+      return 
+      <phrase>
+      { data($phrase) }
+      </phrase>
+}</vf>
+
+RESULTAT :
+
+Hein! 
+ Mais qu'est-ce que tu fais là?</phrase
+ Ca c'est la caisse. 
+ Le mouton que tu veux est dedans. 
+ Pourquoi? 
+ Ca suffira sûrement. 
+ Je t'ai donné un tout petit mouton. 
+
+
+********************************************************************************
+7) Afficher toutes les phrases du Petit Prince en français qui comporte le mot 
+"mouton" ainsi que le nombre de ces phrases :
+
+<vf nb="{count(//paragraphe[@type='dialogue']/phrase[@langue ='francais' 
+      and @locuteur='LePetitPrince' and contains( ., 'mouton')])}">{
+      for $phrase in //paragraphe[@type="dialogue"]/phrase
+      where  $phrase/@langue ="francais"
+      and $phrase/@locuteur="LePetitPrince"
+      and contains( $phrase, 'mouton')
+      return 
+      <phrase>
+      { data($phrase) }
+      </phrase>
+  
+}</vf>
+
+RESULTAT :
+
+<vf nb=9>
+S'il vous plaît... dessine-moi un mouton! 
+Dessine-moi un mouton... 
+S'il vous plaît... dessine-moi un mouton... 
+Ca ne fait rien. Dessine-moi un mouton. 
+J'ai besoin d'un mouton. 
+Dessine-moi un mouton. 
+Tu vois bien... ce n'est pas un mouton, c'est un bélier. 
+Je veux un mouton qui vive longtemps. 
+Crois-tu qu'il faille beaucoup d'herbe à ce mouton? 
+</vf>
+
+
+//----------------------------------------------------------------------------//
+                        TROISIEME PARTIE - AJAX, DOM
+//----------------------------------------------------------------------------//
+
+********************************************************************************
+1. Modifier l'arrière plan :
+
+        function changerCouleur()
+        {
+          window.document.body.style.backgroundColor="blue";
+          window.document.getElementById("myButton1").style.color="#FFFFFF";
+        }
+
+********************************************************************************
+2. Afficher infos du film Workaholics à partir d'un XML et d'un XSL :
+
+        function ajaxWorkaholics(xmlDocumentUrl, xslDocumentUrl, newElementName) {
+          
+          var xsltProcessor = new XSLTProcessor();
+          
+          // Chargement du fichier XSL à l'aide de XMLHttpRequest synchrone (le 3° paramètre est défini à false)
+          var xslDocument = getHttpXML(xslDocumentUrl);
+          
+          // Importation du .xsl
+          xsltProcessor.importStylesheet(xslDocument);
+          
+          // Chargement du fichier XML à l'aide de XMLHttpRequest synchrone (le 3° paramètre est défini à false)
+          var xmlDocument =  getHttpXML(xmlDocumentUrl);
+          
+          // Création du document XML transformé par le XSL
+          var newXmlDocument = xsltProcessor.transformToDocument(xmlDocument);
+
+          // Recherche du parent (dont l'id est "remplacerCeci") de l'élément à remplacer dans le document HTML courant
+          var elementHtmlParent = window.document.getElementById("remplacerCeci");
+          // Premier élément fils du parent
+          var elementHtmlARemplacer = recupererPremierElementEnfant(elementHtmlParent);
+          // Premier élément "elementName" du nouveau document (par exemple, "ul", "table"...)
+          var elementAInserer = newXmlDocument.getElementsByTagName(newElementName)[0];
+          
+          // Remplacement de l'élément
+          elementHtmlParent.replaceChild(elementAInserer,elementHtmlARemplacer);
+
+          // Affichage du bouton 3
+          var BoutonAAfficher = window.document.getElementById("myButton3");
+          BoutonAAfficher.style.display = "inline";
+
+        }
+
+
+********************************************************************************
+3. Afficher plus d'informations à partir de l'API IMDB :
+
+          function ajaxButton3(idElementARemplacer) {
+
+            var elementHtmlParent = window.document.getElementById(idElementARemplacer);
+
+            // Récupèration du fichier JSON
+            var response = getHttpJSON("http://www.omdbapi.com/?t=Workaholics&y=&plot=short&r=json");
+
+            // Récupèration de l'élement ul media
+            var ulMedia = recupererPremierElementEnfant(elementHtmlParent);
+
+            // Récupèration de l'élement li
+            var liMedia = recupererPremierElementEnfant(ulMedia);
+
+            // Récupèration de l'élement a à modifier
+            var aOld = recupererPremierElementEnfant(liMedia);
+
+            // Récupèration de l'élement div à modifier
+            var divMediaBody = recupererDernierElementEnfant(liMedia);
+            
+            // Creation de l'élément <a> contenant la miniature
+            var itemImageLink = document.createElement("a");
+            itemImageLink.setAttribute("class", "pull-left thumbnail-size");
+            itemImageLink.setAttribute("href", response.URLEpisode12);
+            liMedia.replaceChild(itemImageLink, aOld);
+            
+            // Création de l'élément image de la miniature
+            var itemImage = document.createElement("img");
+            itemImage.setAttribute("class", "media-object img-thumbnail responsive");
+            itemImage.setAttribute("src", response.Poster);
+            itemImageLink.appendChild(itemImage);
+
+            // Création de l'élément <div> correspondant aux caractéritiques du programme
+            var moreInfos = document.createElement("div");
+            divMediaBody.appendChild(moreInfos);
+            
+            // Création des labels
+            var yearLabel = document.createElement("span");
+            yearLabel.setAttribute("class", "label label-default");
+            yearLabel.innerHTML = response.Year;
+            var ratedLabel = document.createElement("span");
+            ratedLabel.setAttribute("class", "label label-default");
+            ratedLabel.innerHTML = response.Rated;
+            var releasedLabel = document.createElement("span");
+            releasedLabel.setAttribute("class", "label label-default");
+            releasedLabel.innerHTML = response.Released;
+            var runtimeLabel = document.createElement("span");
+            runtimeLabel.setAttribute("class", "label label-default");
+            runtimeLabel.innerHTML = response.Runtime;
+            var genreLabel = document.createElement("span");
+            genreLabel.setAttribute("class", "label label-default");
+            genreLabel.innerHTML = response.Genre;
+            var languageLabel = document.createElement("span");
+            languageLabel.setAttribute("class", "label label-default");
+            languageLabel.innerHTML = response.Language;
+            var countryLabel = document.createElement("span");
+            countryLabel.setAttribute("class", "label label-default");
+            countryLabel.innerHTML = response.Country;
+            var imdbRatingLabel = document.createElement("span");
+            imdbRatingLabel.setAttribute("class", "label label-default");
+            imdbRatingLabel.innerHTML = response.imdbRating;
+            var imdbVotesLabel = document.createElement("span");
+            imdbVotesLabel.setAttribute("class", "label label-default");
+            imdbVotesLabel.innerHTML = response.imdbVotes;
+          
+            moreInfos.appendChild(yearLabel);
+            moreInfos.appendChild(document.createTextNode (" "));
+            moreInfos.appendChild(ratedLabel);
+            moreInfos.appendChild(document.createTextNode (" "));
+            moreInfos.appendChild(releasedLabel);
+            moreInfos.appendChild(document.createTextNode (" "));
+            moreInfos.appendChild(runtimeLabel);
+            moreInfos.appendChild(document.createTextNode (" "));
+            moreInfos.appendChild(genreLabel);
+            moreInfos.appendChild(document.createTextNode (" "));
+            moreInfos.appendChild(languageLabel);
+            moreInfos.appendChild(document.createTextNode (" "));
+            moreInfos.appendChild(countryLabel);
+            moreInfos.appendChild(document.createTextNode (" "));
+            moreInfos.appendChild(imdbRatingLabel);
+            moreInfos.appendChild(document.createTextNode (" "));
+            moreInfos.appendChild(imdbVotesLabel);
+        }
+
+
+********************************************************************************
+4. Affichage de l'ensemble des événements d'un calendrier XML :
+
+        function ajaxButton4(xmlDocumentUrl, xslDocumentUrl, newElementName) {
+          // Affichage du bouton 5
+          var BoutonAAfficher = window.document.getElementById("myButton5");
+          BoutonAAfficher.style.display = "inline";
+
+          var xsltProcessor = new XSLTProcessor();
+          
+          // Chargement du fichier XSL à l'aide de XMLHttpRequest synchrone (le 3° paramètre est défini à false)
+          var xslDocument = getHttpXML(xslDocumentUrl);
+          
+          // Importation du .xsl
+          xsltProcessor.importStylesheet(xslDocument);
+          
+          // Chargement du fichier XML à l'aide de XMLHttpRequest synchrone (le 3° paramètre est défini à false)
+          var xmlDocument =  getHttpXML(xmlDocumentUrl);
+          
+          // Création du document XML transformé par le XSL
+          var newXmlDocument = xsltProcessor.transformToDocument(xmlDocument);
+
+          // Recherche du parent (dont l'id est "remplacerCeci") de l'élément à remplacer dans le document HTML courant
+          var elementHtmlParent = window.document.getElementById("remplacerCeci");
+          // Premier élément fils du parent
+          var elementHtmlARemplacer = recupererPremierElementEnfant(elementHtmlParent);
+
+          //afficher 1er element
+
+          // Premier élément "elementName" du nouveau document (par exemple, "ul", "table"...)
+          var elementAInserer = newXmlDocument.getElementsByTagName(newElementName)[0];
+          
+          // Remplacement de l'élément
+          elementHtmlParent.replaceChild(elementAInserer,elementHtmlARemplacer);
+
+        }
+
+
+********************************************************************************
+5. Afficher plus de détails pour les évènements d'un calendrier
+
+
+        function ajaxButton5() {
+          var elementHtmlParent = window.document.getElementById("remplacerCeci");
+
+          // Récupèration de l'élement episode
+          var episode = recupererPremierElementEnfant(elementHtmlParent);
+
+          // Récupèration de l'élement li / fils
+          var fils = episode.childNodes;
+
+          var nbFils = fils.length;
+
+          for(var i = 0; i < nbFils; i++)
+          {
+
+            // Récupèration du fichier JSON /meme
+            var titre = document.getElementsByTagName("h4")[i];
+            var text=titre.textContent;
+            var response = getHttpJSON("http://www.omdbapi.com/?t="+text+"&y=&plot=short&r=json");  
+
+            // Récupèration de l'élement a à modifier
+            var aOld = recupererPremierElementEnfant(fils[i]);
+
+            // Récupèration de l'élement div à modifier / list
+            var divMediaBody = recupererDernierElementEnfant(fils[i]);
+            
+            // Creation de l'élément <a> contenant la miniature
+            var itemImageLink = document.createElement("a");
+            itemImageLink.setAttribute("class", "pull-left thumbnail-size");
+            itemImageLink.setAttribute("href", response.URLEpisode12);
+            fils[i].insertBefore(itemImageLink, aOld);
+            
+            // Création de l'élément image de la miniature /meme
+            var itemImage = document.createElement("img");
+            itemImage.setAttribute("class", "media-object img-thumbnail responsive");
+            itemImage.setAttribute("src", response.Poster);
+            itemImageLink.appendChild(itemImage);
+
+            // Création de l'élément <div> correspondant aux caractéritiques du programme /meme
+            var moreInfos = document.createElement("div");
+            divMediaBody.appendChild(moreInfos);
+            
+            // Création des labels
+            var yearLabel = document.createElement("span");
+            yearLabel.setAttribute("class", "label label-default");
+            yearLabel.innerHTML = response.Year;
+            var ratedLabel = document.createElement("span");
+            ratedLabel.setAttribute("class", "label label-default");
+            ratedLabel.innerHTML = response.Rated;
+            var releasedLabel = document.createElement("span");
+            releasedLabel.setAttribute("class", "label label-default");
+            releasedLabel.innerHTML = response.Released;
+            var runtimeLabel = document.createElement("span");
+            runtimeLabel.setAttribute("class", "label label-default");
+            runtimeLabel.innerHTML = response.Runtime;
+            var genreLabel = document.createElement("span");
+            genreLabel.setAttribute("class", "label label-default");
+            genreLabel.innerHTML = response.Genre;
+            var languageLabel = document.createElement("span");
+            languageLabel.setAttribute("class", "label label-default");
+            languageLabel.innerHTML = response.Language;
+            var countryLabel = document.createElement("span");
+            countryLabel.setAttribute("class", "label label-default");
+            countryLabel.innerHTML = response.Country;
+            var imdbRatingLabel = document.createElement("span");
+            imdbRatingLabel.setAttribute("class", "label label-default");
+            imdbRatingLabel.innerHTML = response.imdbRating;
+            var imdbVotesLabel = document.createElement("span");
+            imdbVotesLabel.setAttribute("class", "label label-default");
+            imdbVotesLabel.innerHTML = response.imdbVotes;
+            
+            moreInfos.appendChild(yearLabel);
+            moreInfos.appendChild(document.createTextNode (" "));
+            moreInfos.appendChild(ratedLabel);
+            moreInfos.appendChild(document.createTextNode (" "));
+            moreInfos.appendChild(releasedLabel);
+            moreInfos.appendChild(document.createTextNode (" "));
+            moreInfos.appendChild(runtimeLabel);
+            moreInfos.appendChild(document.createTextNode (" "));
+            moreInfos.appendChild(genreLabel);
+            moreInfos.appendChild(document.createTextNode (" "));
+            moreInfos.appendChild(languageLabel);
+            moreInfos.appendChild(document.createTextNode (" "));
+            moreInfos.appendChild(countryLabel);
+            moreInfos.appendChild(document.createTextNode (" "));
+            moreInfos.appendChild(imdbRatingLabel);
+            moreInfos.appendChild(document.createTextNode (" "));
+            moreInfos.appendChild(imdbVotesLabel);
+          }
+      }
